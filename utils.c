@@ -123,10 +123,9 @@ void control(int ac, char **av)
     {
         printf("str[%d] = %s   ",i, str[i]);
         j=0;
-        while(str[i][j] != '\0' && ft_isdigit(str[i][j]))
+        while(str[i][j] != '\0' && ft_isdigit(str[i][j])) //digit olmayan varsa program bitsin exit(1) 
                 j++;
-        while(str[i][j] != '\0')
-                printf("%s",ft_strchr(str[i],str[i][j++]));
+        printf("%s",ft_strchr(str[i],str[i][j]));
         printf("\n");
         i++;
     }
