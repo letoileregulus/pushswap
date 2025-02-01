@@ -100,33 +100,6 @@ void freeList(t_node *head)
     }
 }
 
-// void control(int ac, char **av)
-// {
-//     printf("ac = %d\n", ac);
-//     int i;
-//     int j;
-//     int k;
-//     i = 0;
-//     k = 1;
-//     char **str;
-//     str = ft_calloc(sizeof(char **), 1);
-
-//     while (av[k])
-//     {
-//         j = 0;
-//        // printf("---\n");
-//         while (ft_split(av[k], ' ')[j] != NULL)
-//         {
-//             str[i] = ft_split(av[k], ' ')[j];
-//            // printf("%s \n", str[i]);
-//             j++;
-//             i++;
-//         }
-//         k++;
-//     }
-// }
-
-
 void control(int ac, char **av)
 {
     printf("ac = %d\n", ac);
@@ -136,25 +109,25 @@ void control(int ac, char **av)
     i = 0;
     k = 0;
     char **str;
-    str = ft_calloc(sizeof(char **), 1);
+    str = ft_calloc(sizeof(char *), ac);
 
     while (av[++k])
     {
         j = 0;
-        while (ft_split(av[k], ' ')[j] != NULL)
-            str[i++] = ft_split(av[k], ' ')[j++];
+        while (ft_split(ft_strtrim(av[k], " "), ' ')[j] != NULL)
+            str[i++] = ft_split(ft_strtrim(av[k], " "), ' ')[j++];
     }
 
     i = 0;
     while (str[i])
     {
+        printf("str[%d] = %s   ",i, str[i]);
         j=0;
+        while(str[i][j] != '\0' && ft_isdigit(str[i][j]))
+                j++;
         while(str[i][j] != '\0')
-        {
-            ft_isdigit(str[i][j]);
-         //printf("str [%d] = %c\n", i, str[i][j]);
-         j++;  
-        }
+                printf("%s",ft_strchr(str[i],str[i][j++]));
+        printf("\n");
         i++;
     }
 }
