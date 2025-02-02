@@ -32,10 +32,12 @@ void append(t_node** head, int data);
 void push(t_node** fromList, t_node** toList);
 void printList(t_node* head);
 void freeList(t_node* head);
-void control(int ac, char **av);
-int *stacka;
-int *stackb;
-int *SortedList;
-int len;
+char **fixarg(int ac, char **av);
+int is_digit_string(char *str);
+int is_digit_array(char **str);
+//int *stacka;
+// int *stackb;
+// int *SortedList;
+// int len;
 
 #endif

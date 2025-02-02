@@ -100,33 +100,93 @@ void freeList(t_node *head)
     }
 }
 
-void control(int ac, char **av)
+// void control(int ac, char **av)
+// {
+//     printf("ac = %d\n", ac);
+//     int i;
+//     int j;
+//     int k;
+//     i = 0;
+//     k = 0;
+//     char **str;
+//     str = ft_calloc(ac, sizeof(char *));
+
+//     while (av[++k])
+//     {
+//         j = 0;
+//         while (ft_split(ft_strtrim(av[k], " "), ' ')[j] != NULL)
+//             str[i++] = ft_split(ft_strtrim(av[k], " "), ' ')[j++];
+//     }
+
+//     i = 0;
+//     while (str[i])
+//     {
+//         printf("str[%d] = %s   ",i, str[i]);
+//         // j=0;
+//         // while(str[i][j] != '\0' && ft_isdigit(str[i][j])) //digit olmayan varsa program bitsin exit(1) 
+//         //         j++;
+//         // printf("%s",ft_strchr(str[i],str[i][j]));
+//         printf("\n");
+//         i++;
+//     }
+// }
+
+int is_digit_string(char *str)
+{
+    if (!str || !*str)
+        return (0);
+    while (*str)
+    {
+        if (*str < '0' || *str > '9')
+            return (0);
+        str++;
+    }
+    return (1);
+}
+
+int is_digit_array(char **str) 
+{
+    int i = 0;
+    
+    if (!str)
+        return (0);
+
+    while (str[i])
+    {
+        if (!is_digit_string(str[i]))
+            return (0);
+        i++;
+    }
+    return (1);
+}
+
+
+char **fixarg(int ac, char **av)
 {
     printf("ac = %d\n", ac);
-    int i;
-    int j;
-    int k;
+    int i, j, k;
     i = 0;
     k = 0;
     char **str;
-    str = ft_calloc(sizeof(char *), ac);
+
+    str = ft_calloc(ac, sizeof(char *));
+    if (str == NULL)
+        exit(1);
 
     while (av[++k])
     {
-        j = 0;
-        while (ft_split(ft_strtrim(av[k], " "), ' ')[j] != NULL)
-            str[i++] = ft_split(ft_strtrim(av[k], " "), ' ')[j++];
-    }
+        char *trimmed;
+        char **split;
 
-    i = 0;
-    while (str[i])
-    {
-        printf("str[%d] = %s   ",i, str[i]);
-        j=0;
-        while(str[i][j] != '\0' && ft_isdigit(str[i][j])) //digit olmayan varsa program bitsin exit(1) 
-                j++;
-        printf("%s",ft_strchr(str[i],str[i][j]));
-        printf("\n");
-        i++;
+        trimmed = ft_strtrim(av[k], " ");
+        split = ft_split(trimmed, ' ');
+        free(trimmed);
+        j = 0;
+        while (split[j] != NULL)
+            str[i++] = split[j++];
+        free(split);
     }
+    str[i] = NULL;
+    return (str);
 }
+
