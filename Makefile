@@ -7,16 +7,14 @@ all: $(NAME)
 
 $(NAME): $(SRCS)
 	make -C ./libft -s
-	cc -o $(NAME) $(SRCS) $(LIBFT)
+	cc 	$(CFLAGS) -o $(NAME) $(SRCS) $(LIBFT)
 clean:
-	rm -f $(OBJS) 
-# Bu gereksiz ^
+	make -C ./libft clean -s
 
 fclean: clean
+	make -C ./libft fclean -s
 	rm -f $(NAME)
-
+		
 re: fclean all
 
 .PHONY: all clean fclean re
-
-#Düzenleeeee

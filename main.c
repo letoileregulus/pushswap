@@ -6,8 +6,8 @@
 int main(int ac, char **av)
 {
     // i = 0;
-    t_node* a = NULL;  // İlk liste (a)
-    t_node* b = NULL;  // İkinci liste (b)
+    //t_node* a = NULL;  // İlk liste (a)
+    //t_node* b = NULL;  // İkinci liste (b)
     char **str;
     int i;
 

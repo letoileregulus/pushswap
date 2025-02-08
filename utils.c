@@ -100,41 +100,17 @@ void freeList(t_node *head)
     }
 }
 
-// void control(int ac, char **av)
-// {
-//     printf("ac = %d\n", ac);
-//     int i;
-//     int j;
-//     int k;
-//     i = 0;
-//     k = 0;
-//     char **str;
-//     str = ft_calloc(ac, sizeof(char *));
-
-//     while (av[++k])
-//     {
-//         j = 0;
-//         while (ft_split(ft_strtrim(av[k], " "), ' ')[j] != NULL)
-//             str[i++] = ft_split(ft_strtrim(av[k], " "), ' ')[j++];
-//     }
-
-//     i = 0;
-//     while (str[i])
-//     {
-//         printf("str[%d] = %s   ",i, str[i]);
-//         // j=0;
-//         // while(str[i][j] != '\0' && ft_isdigit(str[i][j])) //digit olmayan varsa program bitsin exit(1) 
-//         //         j++;
-//         // printf("%s",ft_strchr(str[i],str[i][j]));
-//         printf("\n");
-//         i++;
-//     }
-// }
-
 int is_digit_string(char *str)
 {
     if (!str || !*str)
         return (0);
+    if (*str == '-')
+    {
+        if(ft_isdigit(*(str + 1)))
+            str++;
+        else
+            return(0);
+    }
     while (*str)
     {
         if (*str < '0' || *str > '9')
@@ -146,10 +122,11 @@ int is_digit_string(char *str)
 
 int is_digit_array(char **str) 
 {
-    int i = 0;
+    int i;
+    i = 0;
     
-    if (!str)
-        return (0);
+    if (!str) // !str[0] şartı  sadece ilk girdide "" veya "   " gibi ifadeler için
+        exit(1);//return (0);
 
     while (str[i])
     {
@@ -160,33 +137,36 @@ int is_digit_array(char **str)
     return (1);
 }
 
-
 char **fixarg(int ac, char **av)
 {
     printf("ac = %d\n", ac);
-    int i, j, k;
+    int i;
+    int j;
+    int k;
     i = 0;
     k = 0;
     char **str;
-
     str = ft_calloc(ac, sizeof(char *));
     if (str == NULL)
         exit(1);
-
     while (av[++k])
     {
         char *trimmed;
         char **split;
-
         trimmed = ft_strtrim(av[k], " ");
+        if (!trimmed || *trimmed == '\0') // Eğer tamamen boşsa
+        {
+            free(trimmed);
+            printf("Hata: Boş string girdisi tespit edildi!\n");
+            exit(1);
+        }
         split = ft_split(trimmed, ' ');
         free(trimmed);
         j = 0;
-        while (split[j] != NULL)
+        while (split[j] != NULL) // "" veya "    " gibi ifadeler array'e eklenmiyor
             str[i++] = split[j++];
         free(split);
     }
     str[i] = NULL;
     return (str);
 }
-
